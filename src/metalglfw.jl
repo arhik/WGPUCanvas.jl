@@ -68,17 +68,17 @@ function defaultCanvas(::Type{GLFWMacCanvas}, size::Tuple{Int, Int})
     setMetalLayer(nswindow[], metalLayer[])
     metalSurfaceRef =
         cStruct(
-            WGPUSurfaceDescriptorFromMetalLayer;
+            WGPUSurfaceSourceMetalLayer;
             chain = cStruct(
                 WGPUChainedStruct;
                 next = C_NULL,
-                sType = WGPUSType_SurfaceDescriptorFromMetalLayer,
+                sType = WGPUSType_SurfaceSourceMetalLayer,
             ) |> concrete,
             layer = metalLayer[],
         )
     surfaceDescriptorRef = cStruct(
         WGPUSurfaceDescriptor;
-        label = C_NULL,
+        label = WGPUStringView(C_NULL, 0),
         nextInChain = metalSurfaceRef |> ptr,
     )
     instance = WGPUCore.getWGPUInstance()
