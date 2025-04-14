@@ -66,7 +66,7 @@ function getContext(gpuCanvas::OffscreenCanvas)
             nothing,                    # currentTexture::Any
             nothing,                    # currentTextureView::Any
             nothing,                    # format::WGPUTextureFormat
-            WGPUCore.getEnum(WGPUTextureUsage, ["RenderAttachment"]), # usage::WGPUTextureUsage
+            WGPUTextureUsage_RenderAttachment, # usage::WGPUTextureUsage
             nothing,                    # compositingAlphaMode::Any
             nothing,                    # size::Any
             (500, 500),                 # physicalSize::Any
@@ -144,7 +144,7 @@ function createNewTextureMaybe(canvasCntxt::GPUCanvasContextOffscreen)
         1,
         WGPUCore.getEnum(WGPUTextureDimension, "2D"),
         canvasCntxt.format,
-        canvasCntxt.usage | WGPUCore.getEnum(WGPUTextureUsage, "CopySrc"),
+        WGPUTextureUsage(canvasCntxt.usage | WGPUCore.getEnum(WGPUTextureUsage, "CopySrc")),
     )
     canvasCntxt.currentTextureView = WGPUCore.createView(canvasCntxt.currentTexture)
 end

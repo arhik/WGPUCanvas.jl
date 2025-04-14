@@ -41,18 +41,18 @@ function defaultCanvas(::Type{GLFWWinCanvas}, size::Tuple{Int, Int})
     hinstance = GetModuleHandle(C_NULL)
     winSurfaceRef =
         cStruct(
-            WGPUSurfaceDescriptorFromWindowsHWND;
+            WGPUSurfaceSourceWindowsHWND;
             chain = cStruct(
                 WGPUChainedStruct;
                 next = C_NULL,
-                sType = WGPUSType_SurfaceDescriptorFromWindowsHWND,
+                sType = WGPUSType_SurfaceSourceWindowsHWND,
             ) |> concrete,
             hinstance = hinstance,
             hwnd = winHandleRef[]
         )
     surfaceDescriptorRef = cStruct(
         WGPUSurfaceDescriptor;
-        label = C_NULL,
+        label = WGPUStringView(C_NULL, 0),
         nextInChain = winSurfaceRef |> ptr,
     )
     instance = WGPUCore.getWGPUInstance()
