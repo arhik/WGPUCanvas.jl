@@ -33,7 +33,7 @@ end
 
 struct ErrorCanvas <: AbstractWGPUCanvas end
 
-function WGPUCore.getCanvas(s::Symbol, size::Tuple{Int, Int} = (500,500))
+function WGPUCore.getCanvas(s::Symbol, size::Tuple{Int, Int} = (1080, 900))
     canv = if s==:OFFSCREEN
         OffscreenCanvas
     elseif s==:GLFW
